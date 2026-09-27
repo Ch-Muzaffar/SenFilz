@@ -1,0 +1,16 @@
+{
+  "name": "senfilz-signaling",
+  "version": "1.0.0",
+  "description": "SenFilz WebSocket signaling server — relays WebRTC connection info only, never sees file data",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "ws": "^8.0.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
