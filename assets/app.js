@@ -6,7 +6,7 @@
    ============================================================ */
 
 // ── Config (update before deploy) ─────────────────────────────────────────────
-const WS_URL          = 'wss://YOUR_SIGNALING_SERVER';
+const WS_URL          = 'wss://senfilz.up.railway.app';
 const TURN_USERNAME   = 'de7ab377b3405aad1e5e44c4';
 const TURN_CREDENTIAL = 'OUfcZ/F2q6bzpqxp';
 
