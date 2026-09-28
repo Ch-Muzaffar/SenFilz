@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terms of Service — SenFilz</title>
+  <meta name="description" content="SenFilz Terms of Service. Read how the service works, what it doesn't store, and the rules for acceptable use." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://senfilz.com/terms.html" />
+  <link rel="stylesheet" href="assets/style.css" />
+  <script src="assets/app.js" defer></script>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<!-- ── Nav ── -->
+<nav class="nav" role="navigation" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">Sen<span>Filz</span></a>
+    <div class="nav-links">
+      <a href="/#how-it-works" class="nav-link">How it works</a>
+      <a href="/#faq" class="nav-link">FAQ</a>
+      <a href="terms.html" class="nav-link">Terms</a>
+      <a href="privacy.html" class="nav-link">Privacy</a>
+    </div>
+    <div class="nav-actions">
+      <button class="theme-toggle" aria-label="Switch to light mode"></button>
+      <button class="nav-mobile-toggle" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <div class="nav-mobile-menu" role="dialog" aria-label="Navigation menu">
+    <a href="/">Send a file</a>
+    <a href="/#how-it-works">How it works</a>
+    <a href="/#faq">FAQ</a>
+    <a href="terms.html">Terms</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="mailto:hello@senfilz.com">Contact</a>
+  </div>
+</nav>
+
+<main id="main-content">
+  <div class="legal-content">
+
+    <h1>Terms of Service</h1>
+    <p class="legal-date">Last updated: September 2026</p>
+
+    <h2>1. What SenFilz does</h2>
+    <p>
+      SenFilz is a browser-based file transfer tool. When you use SenFilz, a direct peer-to-peer connection
+      is established between two browsers using WebRTC. Files transfer directly between those two browsers.
+    </p>
+    <p>
+      Our servers only relay the connection details (called SDP and ICE candidates) needed to set up the
+      direct link. We never receive, store, read, or inspect the content of any files transferred through
+      SenFilz. Transfer codes are kept in memory for up to 10 minutes and then discarded automatically.
+    </p>
+
+    <h2>2. Acceptable use</h2>
+    <p>By using SenFilz you agree not to use the service to transfer:</p>
+    <ul>
+      <li>Content that is illegal in your jurisdiction or the recipient's jurisdiction</li>
+      <li>Child sexual abuse material (CSAM) or any content that sexually exploits minors</li>
+      <li>Malware, ransomware, spyware, or any software designed to damage or gain unauthorised access to systems</li>
+      <li>Material that infringes a third party's intellectual property rights</li>
+    </ul>
+    <p>
+      You are solely responsible for the files you choose to send. SenFilz does not monitor transfers
+      and cannot prevent prohibited content from being sent. Misuse may be reported to the appropriate
+      authorities.
+    </p>
+
+    <h2>3. No warranty</h2>
+    <p>
+      SenFilz is provided <strong>as-is</strong> and <strong>as-available</strong> without warranty of
+      any kind — express or implied. We do not guarantee that the service will be available at any
+      particular time, that transfers will always succeed, or that the service is free from errors.
+    </p>
+    <p>
+      WebRTC peer-to-peer connections can fail on restrictive networks (corporate firewalls, certain VPNs).
+      This is a known limitation of the technology. We cannot guarantee successful transfers on all networks.
+    </p>
+
+    <h2>4. Limitation of liability</h2>
+    <p>
+      To the fullest extent permitted by applicable law, SenFilz and its operators shall not be liable
+      for any indirect, incidental, special, consequential, or punitive damages arising from your use
+      of the service — including but not limited to transfer failures, data loss, or any harm resulting
+      from files transferred using SenFilz.
+    </p>
+
+    <h2>5. Changes to these terms</h2>
+    <p>
+      We may update these Terms of Service from time to time. Changes will be posted on this page with
+      an updated date. Continued use of SenFilz after changes are posted constitutes your acceptance of
+      the revised terms.
+    </p>
+
+    <h2>6. Contact</h2>
+    <p>
+      Questions about these terms? Email us at <a href="mailto:hello@senfilz.com">hello@senfilz.com</a>.
+    </p>
+
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <span class="footer-logo">Sen<span>Filz</span></span>
+    <nav class="footer-links" aria-label="Footer navigation">
+      <a href="terms.html">Terms of Service</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="mailto:hello@senfilz.com">Contact</a>
+    </nav>
+    <p class="footer-copy">&copy; <span id="year"></span> SenFilz. Files never touch our servers.</p>
+  </div>
+</footer>
+
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+
+</body>
+</html>

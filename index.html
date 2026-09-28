@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO -->
+  <title>SenFilz — Send Files Directly, Browser to Browser</title>
+  <meta name="description" content="Transfer files directly between browsers with a 6-character code. No uploads, no account, no server storage. Peer-to-peer via WebRTC." />
+  <meta name="keywords" content="send files online, peer to peer file transfer, browser file sharing, no upload file transfer, WebRTC file send, share files without upload" />
+  <link rel="canonical" href="https://senfilz.com/" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://senfilz.com/" />
+  <meta property="og:title"       content="SenFilz — Send Files Directly, Browser to Browser" />
+  <meta property="og:description" content="Drop a file, share a 6-character code. Files transfer directly between browsers — nothing stored on a server." />
+  <meta property="og:image"       content="https://senfilz.com/assets/og/og-home.png" />
+  <meta property="og:image:width"  content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt"    content="SenFilz — browser-to-browser file transfer with a 6-character code" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="SenFilz — Send Files Directly" />
+  <meta name="twitter:description" content="Peer-to-peer file transfer via a 6-character code. No server storage. No account." />
+  <meta name="twitter:image"       content="https://senfilz.com/assets/og/og-home.png" />
+
+  <link rel="stylesheet" href="assets/style.css" />
+
+  <!-- QR Code library (pure JS, no build needed) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
+  <script src="assets/app.js" defer></script>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<!-- ── Nav ── -->
+<nav class="nav" role="navigation" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">Sen<span>Filz</span></a>
+    <div class="nav-links">
+      <a href="#how-it-works" class="nav-link">How it works</a>
+      <a href="#faq" class="nav-link">FAQ</a>
+      <a href="terms.html" class="nav-link">Terms</a>
+      <a href="privacy.html" class="nav-link">Privacy</a>
+    </div>
+    <div class="nav-actions">
+      <button class="theme-toggle" aria-label="Switch to light mode"></button>
+      <button class="nav-mobile-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <div class="nav-mobile-menu" id="mobile-menu" role="dialog" aria-label="Navigation menu">
+    <a href="#how-it-works">How it works</a>
+    <a href="#faq">FAQ</a>
+    <a href="terms.html">Terms</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="mailto:hello@senfilz.com">Contact</a>
+  </div>
+</nav>
+
+<!-- ── Main ── -->
+<main id="main-content">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <h1>Send files directly,<br>browser to browser.</h1>
+      <p class="hero-tagline">
+        Drop a file, share a 6-character code. The receiver enters it and the file
+        goes straight from your browser to theirs — nothing touches our servers.
+      </p>
+      <div class="badge-row">
+        <span class="badge">No upload</span>
+        <span class="badge">No account</span>
+        <span class="badge">No storage</span>
+        <span class="badge badge--accent">WebRTC P2P</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tool Panel -->
+  <section id="tool" style="padding-bottom: var(--s8);">
+    <div class="container">
+      <div class="glass-card tool-panel">
+
+        <!-- Tab bar -->
+        <div class="tab-bar" role="tablist" aria-label="Send or receive">
+          <button id="tab-send" class="tab-btn active" role="tab" aria-selected="true" aria-controls="sender-panel">
+            Send a file
+          </button>
+          <button id="tab-receive" class="tab-btn" role="tab" aria-selected="false" aria-controls="receiver-panel">
+            Receive a file
+          </button>
+        </div>
+
+        <!-- ═══════════════════ SENDER PANEL ═══════════════════ -->
+        <div id="sender-panel" data-state="idle" role="tabpanel" aria-labelledby="tab-send">
+
+          <!-- idle -->
+          <div class="state-idle">
+            <div class="upload-zone" role="button" tabindex="0" aria-label="Drop files here or click to choose">
+              <input type="file" aria-label="Choose files to send" multiple />
+              <div class="upload-icon" id="upload-icon-slot"></div>
+              <h3>Drop files here</h3>
+              <p>or click to browse your device</p>
+            </div>
+
+            <div class="file-list" aria-label="Selected files"></div>
+
+            <div class="warning-box" hidden>
+              <span id="warn-icon-slot"></span>
+              One or more files exceed 2 GB. Very large files are kept in memory during transfer and may crash the browser on slower devices. Make sure both sender and receiver have enough available RAM.
+            </div>
+
+            <div class="file-list-total" aria-live="polite"></div>
+
+            <button class="btn btn-primary btn-lg btn-full mt-4 sender-send-btn" hidden>
+              Get transfer code
+            </button>
+          </div>
+
+          <!-- waiting -->
+          <div class="state-waiting">
+            <div class="code-display">
+              <p class="code-display-label">Your transfer code</p>
+              <div class="code-display-value" aria-label="Transfer code" aria-live="polite"></div>
+              <button class="code-copy-btn btn" aria-label="Copy code to clipboard">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                Copy code
+              </button>
+              <p class="code-countdown" aria-live="polite"></p>
+            </div>
+
+            <div class="qr-wrap">
+              <div id="sender-qr" aria-label="QR code for receiver to scan"></div>
+              <p class="qr-label">Or scan to open on another device</p>
+            </div>
+
+            <div class="waiting-indicator" aria-live="polite">
+              <div class="spinner" aria-hidden="true"></div>
+              <span>Waiting for receiver to enter the code…</span>
+            </div>
+
+            <button class="btn btn-ghost btn-full mt-3 sender-cancel-btn">Cancel</button>
+          </div>
+
+          <!-- connecting -->
+          <div class="state-connecting">
+            <div class="waiting-indicator" style="margin:var(--s8) 0;" aria-live="polite">
+              <div class="spinner spinner-lg" aria-hidden="true"></div>
+              <span>Receiver joined — establishing direct connection…</span>
+            </div>
+            <button class="btn btn-ghost btn-full sender-cancel-btn">Cancel</button>
+          </div>
+
+          <!-- transferring -->
+          <div class="state-transferring">
+            <p class="transfer-label" aria-live="polite"></p>
+            <div class="progress-section">
+              <div class="progress-wrap progress-file">
+                <div class="progress-label">
+                  <span class="progress-label-text progress-section-label">This file</span>
+                </div>
+                <div class="progress-track"><div class="progress-fill processing" style="width:0%"></div></div>
+              </div>
+              <div class="progress-wrap progress-overall">
+                <div class="progress-label">
+                  <span class="progress-label-text progress-section-label">Overall</span>
+                  <span class="progress-pct" aria-live="polite"></span>
+                </div>
+                <div class="progress-track"><div class="progress-fill processing" style="width:0%"></div></div>
+              </div>
+            </div>
+            <button class="btn btn-ghost btn-full mt-4 sender-cancel-btn">Cancel transfer</button>
+          </div>
+
+          <!-- done -->
+          <div class="state-done">
+            <div class="result-box mt-4" role="status">
+              <div>
+                <div style="font-size:var(--text-base);font-weight:600;color:var(--success);margin-bottom:4px">Transfer complete</div>
+                <div class="done-label" style="font-size:var(--text-sm);color:var(--text-secondary)"></div>
+              </div>
+            </div>
+            <button class="btn btn-secondary btn-full mt-4 sender-new-btn">Send another file</button>
+          </div>
+
+          <!-- error -->
+          <div class="state-error">
+            <div class="error-box mt-4" role="alert">
+              <div class="error-box-title">Connection failed</div>
+              <p class="error-msg"></p>
+            </div>
+            <button class="btn btn-secondary btn-full mt-4 sender-cancel-btn">Try again</button>
+          </div>
+
+        </div><!-- /sender-panel -->
+
+        <!-- ═══════════════════ RECEIVER PANEL ═══════════════════ -->
+        <div id="receiver-panel" data-state="idle" role="tabpanel" aria-labelledby="tab-receive" hidden>
+
+          <!-- idle -->
+          <div class="state-idle">
+            <p style="font-size:var(--text-sm);color:var(--text-secondary);text-align:center;margin-top:var(--s3)">
+              Enter the 6-character code from the sender
+            </p>
+            <div class="code-input-row" role="group" aria-label="Enter 6-character transfer code">
+              <input class="code-input-cell" type="text" inputmode="text" maxlength="1" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" aria-label="Code character 1" />
+              <input class="code-input-cell" type="text" inputmode="text" maxlength="1" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" aria-label="Code character 2" />
+              <input class="code-input-cell" type="text" inputmode="text" maxlength="1" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" aria-label="Code character 3" />
+              <input class="code-input-cell" type="text" inputmode="text" maxlength="1" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" aria-label="Code character 4" />
+              <input class="code-input-cell" type="text" inputmode="text" maxlength="1" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" aria-label="Code character 5" />
+              <input class="code-input-cell" type="text" inputmode="text" maxlength="1" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" aria-label="Code character 6" />
+            </div>
+            <button class="btn btn-primary btn-lg btn-full receiver-connect-btn" disabled>
+              Connect &amp; receive
+            </button>
+            <p style="font-size:var(--text-xs);color:var(--text-muted);text-align:center;margin-top:var(--s3)">
+              Codes expire 10 minutes after being generated and can only be used once.
+            </p>
+          </div>
+
+          <!-- connecting -->
+          <div class="state-connecting">
+            <div class="waiting-indicator" style="margin:var(--s8) 0;" aria-live="polite">
+              <div class="spinner spinner-lg" aria-hidden="true"></div>
+              <span>Connecting to sender…</span>
+            </div>
+          </div>
+
+          <!-- receiving -->
+          <div class="state-receiving">
+            <p class="transfer-label" aria-live="polite"></p>
+
+            <div class="warning-box" hidden>
+              <span id="recv-warn-icon-slot"></span>
+              This file exceeds 2 GB and will be kept in memory during transfer. Make sure your device has enough available RAM.
+            </div>
+
+            <div class="progress-section mt-3">
+              <div class="progress-wrap progress-file">
+                <div class="progress-label">
+                  <span class="progress-label-text progress-section-label">This file</span>
+                </div>
+                <div class="progress-track"><div class="progress-fill processing" style="width:0%"></div></div>
+              </div>
+              <div class="progress-wrap progress-overall">
+                <div class="progress-label">
+                  <span class="progress-label-text progress-section-label">Overall</span>
+                  <span class="progress-pct" aria-live="polite"></span>
+                </div>
+                <div class="progress-track"><div class="progress-fill processing" style="width:0%"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- done -->
+          <div class="state-done">
+            <div class="result-box mt-4" role="status">
+              <div>
+                <div style="font-size:var(--text-base);font-weight:600;color:var(--success);margin-bottom:4px">Download complete</div>
+                <div class="done-label" style="font-size:var(--text-sm);color:var(--text-secondary)"></div>
+              </div>
+            </div>
+            <p style="font-size:var(--text-xs);color:var(--text-muted);text-align:center;margin-top:var(--s3)">Your download should have started automatically.</p>
+            <button class="btn btn-secondary btn-full mt-3 receiver-reset-btn">Receive another file</button>
+          </div>
+
+          <!-- error -->
+          <div class="state-error">
+            <div class="error-box mt-4" role="alert">
+              <div class="error-box-title">Transfer failed</div>
+              <p class="error-msg"></p>
+            </div>
+            <button class="btn btn-secondary btn-full mt-4 receiver-reset-btn">Try again</button>
+          </div>
+
+        </div><!-- /receiver-panel -->
+
+      </div><!-- /glass-card -->
+    </div>
+  </section>
+
+  <!-- ── How it works ── -->
+  <section class="section--sm" id="how-it-works">
+    <div class="container">
+      <span class="section-label">How it works</span>
+      <h2 class="section-heading">Three steps. No account required.</h2>
+      <div class="steps">
+        <div class="step glass-card fade-in">
+          <div class="step-number">1</div>
+          <h3>Drop your file</h3>
+          <p>Select or drag one or more files. A 6-character code and QR code appear instantly. The code is valid for 10 minutes.</p>
+        </div>
+        <div class="step glass-card fade-in">
+          <div class="step-number">2</div>
+          <h3>Share the code</h3>
+          <p>Send the 6-character code to the receiver over any channel — chat, email, voice. They can also scan the QR code to open directly on another device.</p>
+        </div>
+        <div class="step glass-card fade-in">
+          <div class="step-number">3</div>
+          <h3>Files transfer directly</h3>
+          <p>The receiver enters the code and the file streams straight from your browser to theirs via WebRTC. Nothing touches our servers.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" style="max-width:var(--max-w);margin:0 auto;" />
+
+  <!-- ── FAQ ── -->
+  <section class="section--sm" id="faq">
+    <div class="container">
+      <span class="section-label">FAQ</span>
+      <h2 class="section-heading">Common questions</h2>
+      <div class="faq-list" style="max-width:720px;margin-top:var(--s5)">
+
+        <details class="faq-item">
+          <summary class="faq-question">Does SenFilz store my files?</summary>
+          <div class="faq-answer">
+            <p>No. Files transfer directly between the two browsers using WebRTC data channels. Our signaling server only relays the connection details needed to set up that direct link — it never sees, receives, or touches your file data.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">Are transfers private?</summary>
+          <div class="faq-answer">
+            <p>The connection is peer-to-peer, so files go directly between the two browsers. As with any direct internet connection, both sides can see each other's IP address — this is standard WebRTC behaviour and cannot be avoided without a relay (TURN) server. We do not log or store any transfer data on our end.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">How many files can I send at once?</summary>
+          <div class="faq-answer">
+            <p>You can drop multiple files at once. They will be sent sequentially over the same connection — each one downloads automatically on the receiver's side as it finishes. One transfer code covers all selected files.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">What is the file size limit?</summary>
+          <div class="faq-answer">
+            <p>There is no hard limit enforced by SenFilz. However, very large files (above 2 GB) are held in the browser's memory during transfer. On devices with limited RAM this can cause the browser to crash. For very large files, we recommend splitting them or using a dedicated large-file transfer service.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">Does transferring change my files in any way?</summary>
+          <div class="faq-answer">
+            <p>No. WebRTC data channels transfer raw binary data — the file on the receiver's device is byte-for-byte identical to the original. There is no compression, re-encoding, or modification of any kind.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">How long does the code last?</summary>
+          <div class="faq-answer">
+            <p>Each code is valid for 10 minutes and can only be used once. As soon as a receiver connects, the code is immediately invalidated so no one else can join the session.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">Why did my transfer fail?</summary>
+          <div class="faq-answer">
+            <p>WebRTC direct connections can fail on restrictive networks — corporate firewalls, certain VPNs, or university networks that block peer-to-peer traffic. SenFilz uses both STUN (for NAT traversal) and TURN (as a relay fallback) to improve reliability, but some networks block all of these. Switching to a mobile hotspot or a different network usually resolves the issue.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">Does it work on mobile?</summary>
+          <div class="faq-answer">
+            <p>Yes. SenFilz works in any modern browser on iOS and Android — no app required. The receiver can also scan the QR code directly with their phone camera to open the receive page automatically.</p>
+          </div>
+        </details>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ── Footer ── -->
+<footer class="footer">
+  <div class="footer-inner">
+    <span class="footer-logo">Sen<span>Filz</span></span>
+    <nav class="footer-links" aria-label="Footer navigation">
+      <a href="terms.html">Terms of Service</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="mailto:hello@senfilz.com">Contact</a>
+    </nav>
+    <p class="footer-copy">&copy; <span id="year"></span> SenFilz. Files never touch our servers.</p>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+  // Inject icons once DOM is parsed (before app.js DOMContentLoaded fires)
+  document.getElementById('upload-icon-slot').innerHTML =
+    '<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>';
+  document.getElementById('warn-icon-slot').innerHTML =
+    '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0;margin-top:1px"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>';
+  // recv warning icon
+  const rwi = document.getElementById('recv-warn-icon-slot');
+  if (rwi) rwi.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0;margin-top:1px"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>';
+</script>
+
+</body>
+</html>
