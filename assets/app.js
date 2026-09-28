@@ -7,7 +7,7 @@
 
 // ── Config (update before deploy) ─────────────────────────────────────────────
 <<<<<<< HEAD
-const WS_URL          = 'wss://YOUR_SIGNALING_SERVER';
+const WS_URL          = 'wss://senfilz.up.railway.app';
 =======
 const WS_URL          = 'wss://senfilz.up.railway.app';
 >>>>>>> 7b5cc8753fcc0d4833fbb19e375971b4a8558642
