@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — SenFilz</title>
+  <meta name="description" content="SenFilz Privacy Policy. We don't store your files. Here's exactly what we do and don't collect." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://senfilz.com/privacy.html" />
+  <link rel="stylesheet" href="assets/style.css" />
+  <script src="assets/app.js" defer></script>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<!-- ── Nav ── -->
+<nav class="nav" role="navigation" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">Sen<span>Filz</span></a>
+    <div class="nav-links">
+      <a href="/#how-it-works" class="nav-link">How it works</a>
+      <a href="/#faq" class="nav-link">FAQ</a>
+      <a href="terms.html" class="nav-link">Terms</a>
+      <a href="privacy.html" class="nav-link">Privacy</a>
+    </div>
+    <div class="nav-actions">
+      <button class="theme-toggle" aria-label="Switch to light mode"></button>
+      <button class="nav-mobile-toggle" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <div class="nav-mobile-menu" role="dialog" aria-label="Navigation menu">
+    <a href="/">Send a file</a>
+    <a href="/#how-it-works">How it works</a>
+    <a href="/#faq">FAQ</a>
+    <a href="terms.html">Terms</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="mailto:hello@senfilz.com">Contact</a>
+  </div>
+</nav>
+
+<main id="main-content">
+  <div class="legal-content">
+
+    <h1>Privacy Policy</h1>
+    <p class="legal-date">Last updated: September 2026</p>
+
+    <h2>1. What we collect</h2>
+    <p>
+      Our signaling server receives your IP address as part of normal WebSocket connections. This is
+      used transiently for rate limiting (to prevent abuse) and is held only in memory — it is never
+      written to a database or log file, and is discarded when the session ends or the server restarts.
+    </p>
+    <p>
+      We do not use cookies. We do not use analytics by default. We do not create user accounts or
+      profiles of any kind.
+    </p>
+
+    <h2>2. What we don't collect</h2>
+    <p>The following information never reaches our servers:</p>
+    <ul>
+      <li>File names</li>
+      <li>File contents</li>
+      <li>File sizes</li>
+      <li>File types</li>
+      <li>Any metadata about the files you transfer</li>
+    </ul>
+    <p>
+      This is not a policy choice — it is a technical fact. Files transfer directly between two browsers
+      using WebRTC data channels. Our server is never in the data path.
+    </p>
+
+    <h2>3. How transfers work</h2>
+    <p>
+      When you generate a transfer code, your browser connects to our signaling server via WebSocket.
+      The server generates a 6-character code and stores a small in-memory record linking your connection
+      to that code. This record holds only the WebRTC connection metadata (SDP offer/answer and ICE
+      candidates) — not your file.
+    </p>
+    <p>
+      When the receiver enters the code, the server forwards the connection metadata to their browser.
+      The two browsers then establish a direct WebRTC connection. From that point on, all data transfers
+      directly between the two browsers. The session record is deleted immediately after the receiver
+      connects, and all remaining records expire automatically after 10 minutes.
+    </p>
+
+    <h2>4. IP addresses and WebRTC</h2>
+    <p>
+      WebRTC peer-to-peer connections work by exchanging network information (ICE candidates) between
+      the two peers. This process may expose each peer's IP address to the other — this is how WebRTC
+      works at a network level and cannot be avoided for direct connections.
+    </p>
+    <p>
+      <strong>We do not claim that SenFilz transfers are anonymous or untraceable.</strong> Both the
+      sender and receiver can see each other's IP addresses as part of normal WebRTC operation. Do not
+      use SenFilz if IP address visibility between peers is a concern for your use case.
+    </p>
+    <p>
+      When a TURN relay server is used (as a fallback on restrictive networks), file data passes through
+      the relay — but still encrypted by WebRTC's mandatory DTLS encryption. The relay server
+      (provided by Metered.ca) does not have access to the plaintext of your file data.
+    </p>
+
+    <h2>5. Third-party services</h2>
+    <p>SenFilz uses the following third-party services:</p>
+    <ul>
+      <li>
+        <strong>Google STUN server</strong> (<code>stun.l.google.com:19302</code>) — used to help
+        establish peer-to-peer connections. Your IP address is disclosed to Google as part of this
+        process. See <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google's Privacy Policy</a>.
+      </li>
+      <li>
+        <strong>Metered.ca TURN server</strong> — used as a relay fallback on restrictive networks.
+        See <a href="https://www.metered.ca/privacy" target="_blank" rel="noopener noreferrer">Metered's Privacy Policy</a>.
+      </li>
+      <li>
+        <strong>Google Fonts</strong> — used to load the Inter typeface. Google may log your IP
+        address when the font is requested. See <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google's Privacy Policy</a>.
+      </li>
+      <li>
+        <strong>cdnjs (Cloudflare)</strong> — used to load the QR code library. Cloudflare may log
+        your IP address when the script is requested.
+      </li>
+    </ul>
+
+    <h2>6. Data retention</h2>
+    <p>
+      Transfer session records (in-memory only): deleted immediately when the receiver connects, or
+      automatically after 10 minutes if unused.
+    </p>
+    <p>
+      IP addresses for rate limiting (in-memory only): discarded when the server restarts or after
+      the rate-limiting window (60 seconds) passes with no new activity from that IP.
+    </p>
+    <p>
+      We have no persistent data storage. There is nothing to delete on request because nothing
+      is retained.
+    </p>
+
+    <h2>7. Contact</h2>
+    <p>
+      Questions about this policy? Email us at <a href="mailto:hello@senfilz.com">hello@senfilz.com</a>.
+    </p>
+
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <span class="footer-logo">Sen<span>Filz</span></span>
+    <nav class="footer-links" aria-label="Footer navigation">
+      <a href="terms.html">Terms of Service</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="mailto:hello@senfilz.com">Contact</a>
+    </nav>
+    <p class="footer-copy">&copy; <span id="year"></span> SenFilz. Files never touch our servers.</p>
+  </div>
+</footer>
+
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+
+</body>
+</html>

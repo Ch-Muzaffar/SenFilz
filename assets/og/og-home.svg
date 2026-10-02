@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#08090d"/>
+      <stop offset="100%" stop-color="#0f1117"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="30%" r="55%">
+      <stop offset="0%"   stop-color="#6366f1" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#08090d" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="cardBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#ffffff" stop-opacity="0.07"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.03"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+
+  <!-- Subtle grid lines -->
+  <line x1="0" y1="315" x2="1200" y2="315" stroke="#ffffff" stroke-opacity="0.03" stroke-width="1"/>
+  <line x1="600" y1="0" x2="600" y2="630" stroke="#ffffff" stroke-opacity="0.03" stroke-width="1"/>
+
+  <!-- Left card — Sender -->
+  <rect x="100" y="180" width="300" height="190" rx="16" fill="url(#cardBg)" stroke="#ffffff" stroke-opacity="0.10" stroke-width="1"/>
+  <!-- Upload icon -->
+  <path d="M250 230 L250 290" stroke="#6366f1" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M230 248 L250 228 L270 248" stroke="#6366f1" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <path d="M220 310 L280 310" stroke="#6366f1" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+  <!-- Label -->
+  <text x="250" y="345" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="13" font-weight="600" fill="#94a3b8" letter-spacing="1">SENDER</text>
+
+  <!-- Arrow between cards -->
+  <path d="M430 275 L770 275" stroke="#6366f1" stroke-width="2" stroke-opacity="0.6" stroke-dasharray="6 4"/>
+  <polygon points="770,268 784,275 770,282" fill="#6366f1" opacity="0.7"/>
+
+  <!-- Code badge -->
+  <rect x="512" y="249" width="176" height="52" rx="10" fill="#6366f1" fill-opacity="0.15" stroke="#6366f1" stroke-opacity="0.35" stroke-width="1"/>
+  <text x="600" y="281" text-anchor="middle" font-family="'Courier New', Courier, monospace" font-size="26" font-weight="700" fill="#818cf8" letter-spacing="5">482951</text>
+
+  <!-- Right card — Receiver -->
+  <rect x="800" y="180" width="300" height="190" rx="16" fill="url(#cardBg)" stroke="#ffffff" stroke-opacity="0.10" stroke-width="1"/>
+  <!-- Download icon -->
+  <path d="M950 230 L950 290" stroke="#10b981" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M930 272 L950 292 L970 272" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <path d="M920 310 L980 310" stroke="#10b981" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+  <!-- Label -->
+  <text x="950" y="345" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="13" font-weight="600" fill="#94a3b8" letter-spacing="1">RECEIVER</text>
+
+  <!-- Logo -->
+  <text x="600" y="116" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="42" font-weight="700" letter-spacing="-1" fill="#f1f5f9">Sen<tspan fill="#6366f1">Filz</tspan></text>
+
+  <!-- Tagline -->
+  <text x="600" y="152" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="17" fill="#94a3b8" letter-spacing="0.3">Browser-to-browser file transfer · No uploads · No account</text>
+
+  <!-- Bottom badges -->
+  <rect x="326" y="430" width="120" height="32" rx="16" fill="#ffffff" fill-opacity="0.05" stroke="#ffffff" stroke-opacity="0.10" stroke-width="1"/>
+  <text x="386" y="451" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="12" font-weight="600" fill="#94a3b8">No Upload</text>
+
+  <rect x="464" y="430" width="120" height="32" rx="16" fill="#ffffff" fill-opacity="0.05" stroke="#ffffff" stroke-opacity="0.10" stroke-width="1"/>
+  <text x="524" y="451" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="12" font-weight="600" fill="#94a3b8">No Account</text>
+
+  <rect x="602" y="430" width="120" height="32" rx="16" fill="#ffffff" fill-opacity="0.05" stroke="#ffffff" stroke-opacity="0.10" stroke-width="1"/>
+  <text x="662" y="451" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="12" font-weight="600" fill="#94a3b8">No Storage</text>
+
+  <rect x="740" y="430" width="134" height="32" rx="16" fill="#6366f1" fill-opacity="0.15" stroke="#6366f1" stroke-opacity="0.35" stroke-width="1"/>
+  <text x="807" y="451" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="12" font-weight="600" fill="#818cf8">WebRTC P2P</text>
+
+  <!-- Domain -->
+  <text x="600" y="556" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="14" fill="#475569" letter-spacing="0.5">senfilz.com</text>
+</svg>
