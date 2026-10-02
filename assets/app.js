@@ -12,6 +12,9 @@ const TURN_CREDENTIAL = 'OUfcZ/F2q6bzpqxp';
 
 const ICE_SERVERS = [
   { urls: 'stun:stun.l.google.com:19302' },
+  { urls: 'stun:stun1.l.google.com:19302' },
+  { urls: 'stun:stun2.l.google.com:19302' },
+  { urls: 'stun:stun.cloudflare.com:3478' },
   {
     urls:       'turn:senfilz.metered.live:80',
     username:   TURN_USERNAME,
@@ -27,7 +30,18 @@ const ICE_SERVERS = [
     username:   TURN_USERNAME,
     credential: TURN_CREDENTIAL,
   },
+  {
+    urls:       'turns:senfilz.metered.live:443?transport=tcp',
+    username:   TURN_USERNAME,
+    credential: TURN_CREDENTIAL,
+  },
 ];
+
+const PC_CONFIG = {
+  iceServers:         ICE_SERVERS,
+  bundlePolicy:       'max-bundle',   // reduces ICE checks; required for iOS Safari reliability
+  iceCandidatePoolSize: 10,           // pre-gather candidates to speed up connection
+};
 
 const CHUNK_SIZE      = 64 * 1024;              // 64 KB per chunk
 const SIZE_WARN       = 2 * 1024 * 1024 * 1024; // 2 GB warning threshold
@@ -335,7 +349,7 @@ class Sender {
   }
 
   async _setupPeer() {
-    this.pc      = new RTCPeerConnection({ iceServers: ICE_SERVERS });
+    this.pc      = new RTCPeerConnection(PC_CONFIG);
     this.channel = this.pc.createDataChannel('senfilz', { ordered: true });
 
     this.channel.onopen = () => {
@@ -351,6 +365,30 @@ class Sender {
       if (e.candidate) {
         this.ws.send(JSON.stringify({ type: 'ice', code: this.code, candidate: e.candidate }));
       }
+    };
+
+    // Detect ICE failures and attempt one automatic restart before giving up
+    this.pc.oniceconnectionstatechange = () => {
+      const s = this.pc.iceConnectionState;
+      if (s === 'failed') {
+        if (!this._iceRestarted) {
+          this._iceRestarted = true;
+          this.pc.createOffer({ iceRestart: true })
+            .then(o => this.pc.setLocalDescription(o))
+            .then(() => {
+              if (this.ws?.readyState === WebSocket.OPEN) {
+                this.ws.send(JSON.stringify({ type: 'offer', code: this.code, offer: this.pc.localDescription }));
+              }
+            })
+            .catch(() => this._showError('timeout'));
+        } else {
+          this._showError('timeout');
+        }
+      }
+    };
+
+    this.pc.onconnectionstatechange = () => {
+      if (this.pc.connectionState === 'failed') this._showError('timeout');
     };
 
     const offer = await this.pc.createOffer();
@@ -715,12 +753,34 @@ class Receiver {
   }
 
   async _handleOffer(offer) {
-    this.pc = new RTCPeerConnection({ iceServers: ICE_SERVERS });
+    // If a peer connection already exists this is a re-offer (ICE restart from sender)
+    if (this.pc) {
+      await this.pc.setRemoteDescription(new RTCSessionDescription(offer));
+      const answer = await this.pc.createAnswer();
+      await this.pc.setLocalDescription(answer);
+      this.ws.send(JSON.stringify({ type: 'answer', code: this.code, answer: this.pc.localDescription }));
+      return;
+    }
+
+    this.pc = new RTCPeerConnection(PC_CONFIG);
 
     this.pc.onicecandidate = e => {
       if (e.candidate) {
         this.ws.send(JSON.stringify({ type: 'ice', code: this.code, candidate: e.candidate }));
       }
+    };
+
+    this.pc.oniceconnectionstatechange = () => {
+      if (this.pc.iceConnectionState === 'failed') {
+        // Only the offerer (sender) can restart ICE; receiver shows error so user can retry
+        if (this._state === 'connecting' || this._state === 'receiving') {
+          this._showError('timeout');
+        }
+      }
+    };
+
+    this.pc.onconnectionstatechange = () => {
+      if (this.pc.connectionState === 'failed') this._showError('timeout');
     };
 
     this.pc.ondatachannel = e => {

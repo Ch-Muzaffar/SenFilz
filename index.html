@@ -7,9 +7,152 @@
   <!-- SEO -->
   <title>SenFilz — Send Files Directly, Browser to Browser</title>
   <meta name="description" content="Transfer files directly between browsers with a 6-character code. No uploads, no account, no server storage. Peer-to-peer via WebRTC." />
-  <meta name="keywords" content="send files online, peer to peer file transfer, browser file sharing, no upload file transfer, WebRTC file send, share files without upload" />
+  <meta name="keywords" content="send files online, peer to peer file transfer, browser file sharing, no upload file transfer, WebRTC file send, share files without upload, P2P file sharing, file transfer without cloud" />
   <link rel="canonical" href="https://senfilz.com/" />
   <meta name="robots" content="index, follow" />
+  <meta name="author" content="SenFilz" />
+  <meta name="application-name" content="SenFilz" />
+
+  <!-- Structured Data: WebApplication (SEO + GEO entity definition) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "SenFilz",
+    "url": "https://senfilz.com/",
+    "description": "SenFilz is a free peer-to-peer file transfer tool that sends files directly between two browsers using WebRTC. A 6-character code connects sender and receiver — no file is ever uploaded to a server, no account is required, and transfers are private.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any modern web browser — Chrome, Firefox, Safari, Edge on Windows, macOS, iOS, Android",
+    "browserRequirements": "Requires a WebRTC-capable browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "featureList": [
+      "Peer-to-peer file transfer via WebRTC — no server storage",
+      "6-character alphanumeric transfer code",
+      "QR code for mobile scan-to-receive",
+      "No file size limit (files above 2 GB require adequate device RAM)",
+      "No account or signup required",
+      "SHA-256 file integrity verification",
+      "Transfer history stored in browser",
+      "Works on iOS, Android, Windows, macOS, Linux",
+      "STUN and TURN relay for maximum network compatibility",
+      "Transfer speed and time remaining display",
+      "Connection quality indicator"
+    ],
+    "publisher": {
+      "@type": "Organization",
+      "name": "SenFilz",
+      "url": "https://senfilz.com/"
+    }
+  }
+  </script>
+
+  <!-- Structured Data: FAQPage (AEO — answer engine / featured snippet eligibility) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Does SenFilz store my files?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. SenFilz files transfer directly between the two browsers using WebRTC data channels. The signaling server only relays the connection setup handshake — it never sees, receives, or stores any file data."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does SenFilz work?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "SenFilz works in three steps: (1) The sender drops a file and receives a 6-character code. (2) The sender shares that code with the receiver via any channel — chat, email, or QR code scan. (3) The receiver enters the code and the file streams directly browser-to-browser via WebRTC — nothing touches a server."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the file size limit for SenFilz?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "SenFilz has no hard file size limit. Files above 2 GB are held in the browser's memory during transfer, so both devices need sufficient RAM. For very large files, splitting them is recommended."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does SenFilz work on iOS and Android?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. SenFilz works in any modern browser on iOS and Android — no app required. The receiver can scan the QR code with their phone camera to open the receive page automatically."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Are SenFilz transfers private?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. The connection is peer-to-peer, so files go directly between the two browsers. As with any direct internet connection, both parties can see each other's IP address — this is standard WebRTC behaviour. SenFilz does not log or store any transfer data."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why did my SenFilz transfer fail?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "WebRTC connections can fail on restrictive networks — corporate firewalls, certain VPNs, or university networks that block peer-to-peer traffic. SenFilz uses both STUN (for NAT traversal) and TURN (as a relay fallback) to maximise reliability across networks and platforms including iOS to Windows. Switching to a mobile hotspot usually resolves persistent failures."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How long does the SenFilz transfer code last?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Each SenFilz transfer code is valid for 10 minutes and can only be used once. As soon as a receiver connects, the code is immediately invalidated so no one else can join the session."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- Structured Data: HowTo (AEO — step-by-step eligibility) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to send a file with SenFilz",
+    "description": "Transfer a file directly between two browsers using SenFilz — no upload, no account, no storage.",
+    "step": [
+      {
+        "@type": "HowToStep",
+        "position": 1,
+        "name": "Drop your file",
+        "text": "Go to senfilz.com, select the Send tab, and drop or select one or more files. A 6-character code and QR code appear instantly. The code is valid for 10 minutes."
+      },
+      {
+        "@type": "HowToStep",
+        "position": 2,
+        "name": "Share the code",
+        "text": "Send the 6-character code to the receiver over any channel — chat, email, or voice. They can also scan the QR code to open the receive page on their device automatically."
+      },
+      {
+        "@type": "HowToStep",
+        "position": 3,
+        "name": "Receive the file",
+        "text": "The receiver goes to the Receive tab on senfilz.com, enters the 6-character code, and clicks Connect. The file streams directly from the sender's browser to theirs — nothing touches a server."
+      }
+    ],
+    "tool": {
+      "@type": "HowToTool",
+      "name": "A modern web browser (Chrome, Firefox, Safari, or Edge)"
+    },
+    "supply": {
+      "@type": "HowToSupply",
+      "name": "No account or installation required"
+    }
+  }
+  </script>
 
   <!-- Open Graph -->
   <meta property="og:type"        content="website" />
